@@ -1,20 +1,30 @@
-import { Component } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
+import { Component, NgModule } from '@angular/core';
 import { StoriesService } from './stories.service'
 import { Story } from './story.data'
 
 @Component({
   selector: 'stories',
-  template: '<h1> Stories list </h1> {{storiesArray}}',
+  templateUrl: './story.component.html',
   providers: [StoriesService]
 })
 export class StoriesComponent {
 
-    private storiesArray = [];
+    private actualStory : Story;
+    private storiesCounter: number;
 
     constructor(private storiesService : StoriesService) {
-      storiesService.retrieveStories().subscribe((data) => {
-          this.storiesArray.push(data);
+      this.storiesCounter = 0;
+    }
+
+    updateActualStory() {
+      this.storiesService.retrieveStories(this.storiesCounter).subscribe((data) => {
+          console.log(data.difficulty, data.summary);
       });
+    }
+
+    clickStoryButton() {
+      this.storiesCounter = this.storiesCounter + 1;
     }
 
 }

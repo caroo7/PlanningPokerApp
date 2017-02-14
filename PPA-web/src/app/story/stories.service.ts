@@ -1,4 +1,4 @@
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import {Http, Headers, RequestOptions, URLSearchParams, Response} from '@angular/http';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import {Injectable} from '@angular/core'
@@ -12,9 +12,12 @@ export class StoriesService {
     constructor(private http: Http) {
     }
 
-    retrieveStories() {
-        return this.http.get(this.url)
-            .map((response : Response) => response.json())
+    retrieveStories(storiesCounter : number) {
+        var options = new RequestOptions({
+          search: new URLSearchParams('storyIndex={{' + storiesCounter + '}}')
+        });
+        return this.http.get(this.url, options)
+            .map(res => res.json())
     }
 
 }

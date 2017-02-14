@@ -7,7 +7,6 @@ export class Story {
     averageEstimation: Number
 
     constructor(difficulty : String, summary : String) {
-        
     }
 
     setAverageEstimation(averageEstimation : Number) {
